@@ -206,7 +206,7 @@ body {
 }
 
 /* Imagen Guía - Lado derecho */
-#bg-guia-container {
+#bg-guia-container, #bg-podio-container {
   display: block;
   position: fixed;
   top: 50vh;
@@ -215,7 +215,13 @@ body {
   z-index: 100;
 }
 
-#bg-guia {
+#bg-podio-container {
+  top: 70vh;
+  left: 5vw;
+  pointer-events: none; /* Esto hace que la imagen no interfiera con los clics */
+}
+
+#bg-guia, #bg-podio {
   width: 20vw;
   height: auto;
 }
@@ -257,7 +263,7 @@ body {
     </div>
     <div id="bg-guia-container">
       <img id="bg-guia" src="./assets/img/bg-guia.png" alt="Guía del juego">
-    </div>    
+    </div>     
       <div id="game-ui">
         <p id="game-score"></p>
 
@@ -284,7 +290,10 @@ body {
     <!-- Botón de "JUGAR" ubicado fuera del canvas de juego -->
     <div id="game-start-container">
       <button id="boton-jugar" class="btn-jugar">JUGAR</button>
-  </div>  
+    </div>  
+    <div id="bg-podio-container">
+      <img id="bg-podio" src="./assets/img/bg-podium.png" alt="Podio del juego">
+    </div>  
   </div>
 
   <script type="text/javascript" src="./matter.js"></script>
