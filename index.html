@@ -6,149 +6,258 @@
   <title>Suika Twitch Game</title>
   <meta property="og:title" content="Suika Twitch Game" />
   <style>
-    @import url(https://fonts.bunny.net/css?family=azeret-mono:400,700,900);
+ @import url(https://fonts.bunny.net/css?family=azeret-mono:400,700,900);
 
-    :root {
-      --col-bg: #e5d4ff;
-      --col-bg-light: #d4b8fd;
-      --col-bg-lighter: #c096ff;
-      --col-primary: #9146ff;
-      --col-primary-dark: #634e83;
-      --col-primary-light: #c096ff;
-      --col-shadow: rgba(0, 0, 0, 0.25);
-      --col-white: #fff;
-    }
+:root {
+  --col-bg: #e5d4ff;
+  --col-bg-light: #d4b8fd;
+  --col-bg-lighter: #c096ff;
+  --col-primary: #9146ff;
+  --col-primary-dark: #634e83;
+  --col-primary-light: #c096ff;
+  --col-shadow: rgba(0, 0, 0, 0.25);
+  --col-white: #fff;
+}
 
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-      line-height: 1;
-    }
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
 
-    body {
-      background-color: var(--col-bg);
-      font-family: 'Azeret Mono', sans-serif;
-    }
+body {
+  background-color: var(--col-bg);
+  font-family: 'Azeret Mono', sans-serif;
+}
 
-    .container {
-      width: 100%;
-      max-width: 640px;
-      margin: 0 auto;
-      height: 100vh;
-    }
+.container {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  height: 100vh;
+}
 
-    #game-canvas {
-      position: relative;
-    }
+#game-canvas {
+  position: relative;
+}
 
-    #game-ui {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      user-select: none;
-      font-weight: 700;
-      display: none;
-      transform-origin: top left;
-      color: var(--col-primary-dark)
-    }
+#game-ui {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  font-weight: 700;
+  display: none;
+  transform-origin: top left;
+  color: var(--col-primary-dark);
+}
 
-    #game-score {
-      position: absolute;
-      width: 100%;
-      border-bottom: 2px dotted #333;
-      font-size: 84px;
-      font-weight: 900;
-      padding-left: 16px;
-      color: var(--col-bg-lighter);
-      text-shadow: 3px 3px 0 var(--col-primary), -3px -3px 0 var(--col-primary), -3px 3px 0 var(--col-primary), 3px -3px 0 var(--col-primary);
-    }
+#game-score {
+  position: absolute;
+  width: 100%;
+  border-bottom: 0.2vh dotted #333;
+  font-size: 7vh;
+  font-weight: 900;
+  padding-left: 2vw;
+  color: var(--col-bg-lighter);
+  text-shadow: 3px 3px 0 var(--col-primary), -3px -3px 0 var(--col-primary), -3px 3px 0 var(--col-primary), 3px -3px 0 var(--col-primary);
+}
 
-    #game-end-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-items: center;
-      background-color: var(--col-shadow);
-    }
+#game-start-container {
+  position: absolute;
+  top: 75vh; /* Ajustado según viewport height */
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10; /* Asegúrate de que esté sobre el canvas */
+}
 
-    #game-end {
-      text-align: center;
-      padding: 32px 48px;
-      background-color: var(--col-bg-lighter);
-      border: 5px solid var(--col-primary);
-      box-shadow: 0 4px 32px var(--col-shadow);
-      border-radius: 32px;
-      margin: 0 auto;
-      pointer-events: initial;
-      user-select: initial;
-    }
+#game-end-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--col-shadow);
+}
 
-    #game-end-title {
-      font-weight: 700;
-      font-size: 48px;
-      color: var(--col-primary-dark);
-    }
+#game-end {
+  text-align: center;
+  padding: 4vh 6vw;
+  background-color: var(--col-bg-lighter);
+  border: 0.5vh solid var(--col-primary);
+  box-shadow: 0 0.5vh 5vw var(--col-shadow);
+  border-radius: 3vh;
+  margin: 0 auto;
+  pointer-events: initial;
+  user-select: initial;
+}
 
-    #game-end-link {
-      display: inline-block;
-      color: var(--col-white);
-      font-size: 24px;
-      text-decoration: none;
-      background-color: var(--col-primary-light);
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: 16px;
-      box-shadow: 4px 4px 0 var(--col-shadow);
-    }
+#game-end-title {
+  font-weight: 700;
+  font-size: 5vh;
+  color: var(--col-primary-dark);
+}
 
-    #game-end-link:hover {
-      background-color: var(--col-primary);
-      box-shadow: 6px 6px 0 var(--col-shadow);
-    }
+#game-end-link, #boton-jugar, .button-top-left, .button-competition {
+  display: inline-block;
+  color: var(--col-white);
+  font-size: 2.5vh;
+  text-decoration: none;
+  background-color: var(--col-primary-light);
+  padding: 2vh;
+  margin-top: 2vh;
+  border-radius: 2vh;
+  box-shadow: 0.5vw 0.5vw 0 var(--col-shadow);
+}
 
-    #game-status {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 48px;
-      background-color: var(--col-bg-lighter);
-      display: flex;
-    }
+#boton-jugar, .button-top-left, .button-competition {
+  margin-top: 3vh;
+  padding: 3vh;
+  padding-right: 6vw;
+  padding-left: 6vw;
+  border-radius: 2.5vh;
+}
 
-    .game-status-item {
-      display: flex;
-      line-height: 1;
-      align-items: center;
-      margin-right: 32px;
-    }
+.button-top-left, .button-competition {
+  position: fixed;
+  top: 10vh;
+  left: 7.5vw;
+  transform: translateY(-50%);
+  padding: 1vh 2vw;
+  border-radius: 2vh;
+  cursor: pointer;
+  z-index: 100;
+}
 
-    .game-status-label {
-      color: #666;
-      font-size: 16px;
-      margin-left: 24px;
-      margin-right: 8px;
-    }
+.button-competition {
+  top: 18vh;
+  left: 8vw;
+}
 
-    #game-highscore-value {
-      color: #333;
-      font-weight: 700;
-      font-size: 24px;
-    }
+#game-end-link:hover, #boton-jugar:hover, .button-top-left:hover, .button-competition:hover {
+  background-color: var(--col-primary);
+  box-shadow: 0.5vw 0.5vw 0 var(--col-shadow);
+}
 
-    #game-next-fruit {
-      width: 24px;
-      height: 24px;
-    }
+#game-status {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5vh;
+  background-color: var(--col-bg-lighter);
+  display: flex;
+}
+
+.game-status-item {
+  display: flex;
+  line-height: 1;
+  align-items: center;
+  margin-right: 3vw;
+}
+
+.game-status-label {
+  color: #666;
+  font-size: 2vh;
+  margin-left: 2vw;
+  margin-right: 1vw;
+}
+
+#game-highscore-value {
+  color: #333;
+  font-weight: 700;
+  font-size: 3vh;
+}
+
+#game-next-fruit {
+  width: 3vh;
+  height: 3vh;
+}
+
+/* Popup de instrucciones */
+.popup {
+  display: none;
+  position: fixed;
+  top: 30vh;
+  left: 30vw;
+  transform: translateY(-50%);
+  z-index: 1000;
+  width: 40vw;
+  background-color: white;
+  border: 0.2vh solid #888;
+  box-shadow: 0 0.5vh 1vw rgba(0, 0, 0, 0.1);
+  padding: 2vh;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+#close-popup, #close-popup-competition {
+  position: absolute;
+  top: 1vh;
+  right: 1vh;
+  font-size: 3vh;
+  cursor: pointer;
+}
+
+/* Imagen Guía - Lado derecho */
+#bg-guia-container {
+  display: block;
+  position: fixed;
+  top: 50vh;
+  right: 5vw;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+#bg-guia {
+  width: 20vw;
+  height: auto;
+}
+
   </style>
 </head>
 <body>
   <div class="container">
     <div id="game-canvas">
+      <button id="btn-instrucciones" class="button-top-left">INSTRUCCIONES</button>
+    <div id="popup-instrucciones" class="popup">
+      <div class="popup-content">
+        <span id="close-popup">&times;</span>
+        <h2>Instrucciones del Juego</h2>
+        <p>‎ </p>
+        <p>- El objetivo del juego es combinar 2 caras iguales para crear una más grande y asi llegar a combinar 2 Mortedor.</p>
+        <p>‎ </p>
+        <p>- Para soltar las caras clickea con el mouse donde quieras que caiga y formá las combinaciones.</p>
+        <p>‎ </p>
+        <p>- En la parte de abajo vas a ver el puntaje maximo que obtuviste y la siguiente cara, para pensar y hacer mejor las jugadas.</p>
+        <p>‎ </p>
+        <p>- Se pierde cuando soltas una cara por arriba de la linea.</p>
+        <p>‎ </p>
+        <p>- Si la pagina la abris desde una tele o un monitor con diferente resolucion, se va a ver desfasado el juego un poco para la izquierda.</p>
+      </div>
+    </div>
+      <button id="btn-competition" class="button-competition">COMPETENCIA</button>
+    <div id="popup-competition" class="popup">
+      <div class="popup-content">
+        <span id="close-popup-competition">&times;</span>
+        <h2>Competencia del Juego</h2>
+        <p>‎ </p>
+        <p>Si queres competir contra otros streamers tenes que hacer el mayor puntaje posible y mandarme el clip por susurro o algun lado asi yo lo verifico.</p>
+        <p>‎ </p>
+        <p>El que mayor cantidad de puntos haga, se va a ganar 5 subs</p>
+        <p>‎ </p>
+        <p>La tabla de posiciones no se modifica sola, la tengo que modificar a mano, asi que si ven que el puntaje de ustedes es mayor que alguno de la tabla y no se modifica no se preocupen.</p>
+      </div>
+    </div>
+    <div id="bg-guia-container">
+      <img id="bg-guia" src="./assets/img/bg-guia.png" alt="Guía del juego">
+    </div>    
       <div id="game-ui">
         <p id="game-score"></p>
 
@@ -171,7 +280,13 @@
         </div>
       </div>
     </div>
+
+    <!-- Botón de "JUGAR" ubicado fuera del canvas de juego -->
+    <div id="game-start-container">
+      <button id="boton-jugar" class="btn-jugar">JUGAR</button>
+  </div>  
   </div>
+
   <script type="text/javascript" src="./matter.js"></script>
   <script type="text/javascript" src="./index.js?v=4"></script>
 </body>
